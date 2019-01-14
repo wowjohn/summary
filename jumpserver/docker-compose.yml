@@ -1,0 +1,44 @@
+version: '3'
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./jumpserver:/usr/share/nginx/html/jumpserver
+      - ./luna:/usr/share/nginx/html/luna
+    ports:
+      - 80:80
+      - 443:443
+    depends_on:
+      - jumpserver
+    privileged: true
+  mysql:
+    image: mysql:5.6
+    container_name: mysql
+    volumes:
+      - ./mysqldata:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+    ports:
+      - 3306:3306
+  redis:
+    image: redis
+    container_name: redis
+    ports:
+      - 6739:6739
+  jumpserver:
+    image: registry.cn-hangzhou.aliyuncs.com/jimu/jumpserver:1.1.0
+    container_name: jumpserver
+    volumes:
+      - ./jumpserver:/opt/jumpserver
+    depends_on:
+      - redis
+      - mysql
+    ports:
+      - 8080:8080
+    working_dir: /opt/jumpserver
+    privileged: true
+    entrypoint: sh entrypoint.sh
+    restart: always

@@ -1,0 +1,11 @@
+version: '3'
+services:
+  guacamole:
+    image: jumpserver/jms_guacamole:1.4.6
+    container_name: guacamole
+    ports:
+      - 8081:8081
+    environment:
+      - JUMPSERVER_KEY_DIR=/config/guacamole/key
+      - JUMPSERVER_SERVER=http://jumpserver-host:8080
+      - BOOTSTRAP_TOKEN=nwv4RdXpM82LtSvmV

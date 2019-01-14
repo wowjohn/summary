@@ -1,0 +1,13 @@
+version: '3'
+services:
+  coco:
+    image: jumpserver/jms_coco:1.4.6
+    container_name: coco
+    ports:
+      - 2222:2222
+      - 5000:5000
+    volumes:
+      - ./conf.py:/opt/coco/conf.py
+    environment:
+      - CORE_HOST=http://jumpserver-host:8080
+      - BOOTSTRAP_TOKEN=nwv4RdXpM82LtSvmV
