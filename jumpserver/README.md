@@ -15,7 +15,7 @@
     * coco 作用是 ssh连接
     * guacamole 作用是 RDP 连接
     * luna 只是静态页面，保证Web Terminal 访问
-    * 先运行 jumpserver 再运行coco,guacamole 注册
+    * 先运行 jumpserver 再运行coco,guacamole 注册 , 注册后需多次刷新terminal
    
 > * coco,guacamole 在 jumpserver上注册时 需保证 BOOTSTRAP_TOKEN 一致，用来注册服务账号，保证验证通过
 
