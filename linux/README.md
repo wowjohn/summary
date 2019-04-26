@@ -9,3 +9,7 @@
 ```bash
     docker rm `docker ps -a|grep Exited|awk '{print $1}'`
 ```
+* 下载文件到本地 （windows默认是在文件夹【下载】中）
+```bash
+   sz 文件名
+```
