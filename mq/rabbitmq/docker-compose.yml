@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  mq:
+    image: rabbitmq:3.8-rc-management
+    container_name: rabbitmq
+    ports:
+      - 8081:15672
+      - 5672:5672
+    hostname: my-rabbit
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin0531
+      - RABBITMQ_DEFAULT_PASS=admin0531
+      - RABBITMQ_VM_MEMORY_HIGH_WATERMARK.RELATIVE=0.4
+      - RABBITMQ_VM_MEMORY_HIGH_WATERMARK.ABSOLUTE=2GB
