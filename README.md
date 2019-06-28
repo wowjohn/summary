@@ -11,3 +11,5 @@
 * [链路监控](monitor/README.md)
 * [mysql](mysql/README.md)
 * [go](go/Beego.md)
+* [git-commit 规范](git-commit/help.md)
+* [php-cs-fixer](php/help.md)
