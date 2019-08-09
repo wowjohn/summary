@@ -25,7 +25,7 @@ git commit -m "feat: 新增XXX需求"
     * build：编译
     * chore：构建过程或辅助工具的变动
     * ci：集成部署
-     * docs：文档（documentation）
+    * docs：文档（documentation）
     * feat：新功能（feature）
     * fix：修补bug
     * perf：提升性能
