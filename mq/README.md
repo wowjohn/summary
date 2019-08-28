@@ -8,3 +8,6 @@
     * 修改 php.ini,添加  extension=php_amqp
     
  [Dokcer 运行](rabbitmq/README.md)
+
+ 
+ >  声明队列是幂等的 - 只有在它不存在的情况下才会创建它

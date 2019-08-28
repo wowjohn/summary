@@ -17,3 +17,6 @@
 * [定时任务系统 2](crontab/ppgo.md)
 * [jenkins](jenkins/index.md)
 * [Tengine](tengine/index.md)
+* [git 冲突解决](git/index.md)
+* [cnpmjs私有库](cnpmjs/index.md)
+* [confluence文档工具](confluence/README.md)

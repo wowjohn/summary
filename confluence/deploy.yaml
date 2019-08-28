@@ -1,0 +1,71 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: confluence
+  namespace: default
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: confluence
+        env: test
+    spec:
+      containers:
+      - name: confluence
+        image: registry.dev.com:5000/icoastline/confluence:IMAGE_VERSION
+        volumeMounts:
+          - mountPath: /var/atlassian/application-data/confluence
+            name: local-home
+          - mountPath: /opt/atlassian/confluence/logs
+            name: confluence-log 
+        ports:
+        - name: default
+          containerPort: 8090
+        - name: sync-job
+          containerPort: 8091  
+      volumes:
+        - name: local-home
+          hostPath :
+            path : /home/data/dev/confluence
+        - name: confluence-log
+          hostPath: 
+            path : /home/data/dev/confluence/confluence-logs   
+---
+kind: Service
+apiVersion: v1
+metadata:
+  labels:
+    app: confluence
+    env: test
+  name: confluence
+  namespace: default
+spec:
+  ports:
+  - port: 8090
+    targetPort: 8090
+    nodePort: 8090
+    name: default
+  - port: 8091
+    targetPort: 8091
+    name: sync-job  
+  type: NodePort
+  selector:
+    app: confluence
+    env: test
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: confluence
+  namespace: default
+spec:
+  rules:
+  - host: confluence.icoastline.cn
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: confluence
+          servicePort: 8090
+     
