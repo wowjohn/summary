@@ -1,3 +1,6 @@
 /cache/
 /config/development/
 .idea/
+.DS_Store
+/node_modules/
+_book/
