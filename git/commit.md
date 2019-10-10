@@ -28,8 +28,8 @@ git commit -m "feat: 新增XXX需求"
     * docs：文档（documentation）
     * feat：新功能（feature）
     * fix：修补bug
-    * perf：提升性能
+    * perf：提升性能，体验
     * refactor：重构（即不是新增功能，也不是修改bug的代码变动）
     * revert：回滚，撤销之前的commit
-    * style：样式（不影响代码运行的变动）
-    * test：增加测试
+    * style：样式（不影响代码逻辑的变动,比如修改了空格，格式缩进，逗号等）
+    * test：增加测试相关（单元测试，集成测试）
