@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  yapi-web:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: yapi-web
+    ports:
+      - 40001:3000
+    volumes:
+      - ./config.js:/yapi/config.js
+    depends_on:
+      - yapi-mongo
+  yapi-mongo:
+    image: mongo:latest
+    container_name: yapi-mongo
+#    volumes:
+#      - ./mongodb_data:/data/db
+    ports:
+      - "0.0.0.0:27017:27017"
