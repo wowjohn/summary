@@ -59,5 +59,33 @@ package golang.org/x/crypto/ssh: unrecognized import path "golang.org/x/crypto/s
 * > 可运行：docker run -it registry.cn-hangzhou.aliyuncs.com/jimu/go:build-ppgo bash，在该环境下进行编译
 
 
+> 注： win10  直接切到代码目录， 打开git bash ,CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o PPGo_Job，进行编译即可
+
+> 修改错误日志未正确输出问题 
+```golang
+    var b bytes.Buffer
+    var c bytes.Buffer
+    session.Stdout = &b
+    session.Stderr = &c
+    //session.Output(command)
+    if err := session.Run(command); err != nil { 
+
+/**
+* 此处没有 对 jobresult.OutMsg，jobresult.ErrMsg赋值，导致执行任务出错时，无法获取错误信息
+*
+*  添加即可：
+*  jobresult.OutMsg = b.String()
+*  jobresult.ErrMsg = c.String()
+*/
+        jobresult.IsOk = false
+        return
+    }
+    jobresult.OutMsg = b.String()
+    jobresult.ErrMsg = c.String()
+    jobresult.IsOk = true
+    jobresult.IsTimeout = false
+
+```
+
 ---------
 [文档地址](https://github.com/george518/PPGo_Job/releases)

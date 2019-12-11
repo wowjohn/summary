@@ -28,7 +28,10 @@
 * [RPC](rpc/jsonrpc.md)
 * [配置中心](config/apollo.md)
 * [yapi](yapi/index.md)
-
+* [redis相关配置](redis/index.md)
+* [elk](elk/index.md)
+* [symfony](php/symfony.md)
+* [hyperf](php/hyperf.md)
 
 
 
