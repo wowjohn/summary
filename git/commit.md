@@ -35,6 +35,9 @@ git commit -m "feat: 新增XXX需求"
     * test：增加测试相关（单元测试，集成测试）
     
 
+> 可参照 https://github.com/wowjohn/sf44-template 进行配置
+
+
 #### 合并commit
 ```text
 git rebase -i HEAD~[number_of_commits]

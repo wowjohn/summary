@@ -45,23 +45,20 @@ package golang.org/x/crypto/ssh: unrecognized import path "golang.org/x/crypto/s
 > 解决办法：卸载 go (直接删除 /usr/local/go 文件夹) , 直接重新安装 go
 
 
-------------
+-----------------------------------
 
-如果需要修改controller,需要修改 GOPATH/src/github.com/george518/PPGo_Job/controllers 下文件，之后进行编译。
-
-镜像：
- GOPATH: /root/go/src
- 
-* > 切换到目录： /usr/local/PPGo_Job-2.8.0  ，docker-compose 运行时编译，CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o PPGo_Job  (需要在linux 环境下运行该命令)
-
-* > 修改页面数据，直接修改对应html,重新build 镜像
-
-* > 可运行：docker run -it registry.cn-hangzhou.aliyuncs.com/jimu/go:build-ppgo bash，在该环境下进行编译
-
+> 如果需要修改controller,需要修改 GOPATH/src/github.com/george518/PPGo_Job/controllers 下文件，之后进行编译。
 
 > 注： win10  直接切到代码目录， 打开git bash ,CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o PPGo_Job，进行编译即可
 
-> 修改错误日志未正确输出问题 
+---------
+[文档地址](https://github.com/george518/PPGo_Job/releases)
+
+------------------------------------
+以 2.8.0 版本 为例：
+
+ * 下载源码后修改的地方有：
+    > jobs/job.go 修改错误日志未正确输出问题 
 ```golang
     var b bytes.Buffer
     var c bytes.Buffer
@@ -87,5 +84,15 @@ package golang.org/x/crypto/ssh: unrecognized import path "golang.org/x/crypto/s
 
 ```
 
----------
-[文档地址](https://github.com/george518/PPGo_Job/releases)
+   > controllers/login.go 修改成登录后直接跳转体验
+```golang
+    func (self *LoginController) Login() {
+
+    	if self.userId > 0 {
+    		self.redirect(beego.URLFor("HomeController.Index"))
+    	} else {
+    		self.TplName = "login/login.html"
+    	}
+    }
+```
+    > 其他为页面部分修改，可以看自己需求
