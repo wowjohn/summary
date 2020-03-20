@@ -26,6 +26,28 @@ services:
       - 5601:5601
     networks:
       - sf-es-k
-
+#  logstash:
+#    image: docker.elastic.co/logstash/logstash:7.4.2
+#    container_name: logstash
+#    volumes:
+#      - './logstash.conf:/etc/logstash.conf'
+#      - ./logstash.yml:/usr/share/logstash/config/logstash.yml
+#    ports:
+#      - "0.0.0.0:5044:5044/tcp"
+#    networks:
+#      - sf-es-k
+#  filebeat:
+#    image: docker.elastic.co/beats/filebeat:7.4.2
+#    container_name: filebeat
+#    volumes:
+#      - './filebeat.yml:/usr/share/filebeat/filebeat.yml'
+#      - 'c:/work/gitlab/school/school-api/var/log/:/home/school/'
+##      - 'c:/work/gitlab/repair-system/repair/var/logs/:/home/repair/'
+#      - 'c:/work/gitlab/pay/payment-api/var/log/:/home/repair/'
+##    environment:
+##      - setup.kibana.host=192.168.40.236:5601
+##      - output.elasticsearch.hosts=["192.168.40.236:9200"]
+#    networks:
+#      - sf-es-k
 networks:
   sf-es-k:

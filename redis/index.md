@@ -12,6 +12,15 @@ REDIS_URL=redis://127.0.0.1
 REDIS_URL=redis://:Y123321@192.168.40.236/10
 ```
 
+
+* 远程连接Redis服务器
+    * 下载安装包到当前目录： > wget http://download.redis.io/releases/redis-3.2.0.tar.gz
+    * 解压： > tar -xzf redis-3.2.0.tar.gz
+    * 进入解压的文件夹 > cd redis-3.2.0
+    * make文件：    >make  。 make之后在src文件中会出现 redis-cli
+    * 连接远端redis:   >./redis-cli -h [host] -p [port]
+    * 登陆后如果有密码需要授权： > auth  yourPassword
+    * 选择相应的库：>select 3
 ----------------------------------
 
 * 分布式锁(因为redis使用的是单进程单线程模型)

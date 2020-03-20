@@ -1,0 +1,19 @@
+filebeat.inputs:
+  - type: log
+    paths:
+      - /home/school/*.log
+    tags: ["school"]
+  - type: log
+    paths:
+      - /home/repair/*.log
+    tags: ["repair"]
+
+# 输出位置
+output.logstash:
+  # The Logstash hosts
+  hosts: ["192.168.40.236:5044"]
+  loadbalance: true
+  index: filebeat
+#output.elasticsearch:
+#  # The Elasticsearch hosts
+#  hosts: ["192.168.40.236:9200"]

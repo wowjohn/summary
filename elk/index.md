@@ -1,0 +1,1 @@
+https://jolicode.com/blog/how-to-visualize-symfony-logs-in-dev-with-elasticsearch-and-kibana
