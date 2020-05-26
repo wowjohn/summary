@@ -1,0 +1,1 @@
+https://www.bookstack.cn/read/kubesphere-v2.0-zh/release.md

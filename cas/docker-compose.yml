@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  cas:
+    image: apereo/cas:v6.1.3
+    volumes:
+      - ./cas/build/cas-resources/:src/main/resources
+    container_name: cas
+    ports:
+      - 8080:8080
+      - 8443:8443
