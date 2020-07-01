@@ -12,3 +12,7 @@ phpCAS::getUser() 获得登录之后的用户名
 
 备注：
     跨域登录需走https协议，否则cookie无法共享使用
+    
+    
+    
+参考文档：https://calnetweb.berkeley.edu/calnet-technologists/cas/how-cas-works
