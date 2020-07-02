@@ -1,0 +1,84 @@
+pipeline{
+       agent any
+
+	   environment{
+	          namespace='test-env'
+			  envir='test'
+			  ppgoport='31112'
+			  ppgoname='test-os-api'
+			  projectname='os-api'
+	   }
+
+	   stages{
+	          stage('清理工作区') {
+			         steps {
+					 sh """ ls ${workspace} |xargs rm -rf"""
+					 echo '清理完成'
+					 }
+			  }
+	          stage('拉取代码') {
+			         steps {
+					        echo '正在拉取代码...'
+							script {
+							       checkout([
+								   $class: 'GitSCM',
+								   branches: [[name: '*/test']],
+								   doGenerateSubmoduleConfigurations: false,
+								   extensions: [],
+								   submoduleCfg: [],
+								   userRemoteConfigs: [[credentialsId: 'gitlab-connection-account', url: 'https://gitlab.axhome.com.cn/common/object-storage-api.git']]
+								   ])
+							}
+							sh """rm .git -rf && \
+							         find . -type d -print0 | xargs -0  chmod 755 && \
+									 find . -type f -print0 | xargs -0  chmod 644 && \
+									 rm -f ${projectname}.conf && \
+									 chmod +x deploy.sh"""
+							echo '代码已拉取，权限已处理'
+					 }
+			  }
+			  stage('下载模板文件') {
+			         steps{
+					 sh """wget http://192.168.200.187:8090/${projectname}/${projectname}.conf && \
+					          wget http://192.168.200.187:8090/${projectname}/upload-php.ini && \
+					          wget http://192.168.200.187:8090/${projectname}/Dockerfile && \
+					          sed -i "s/env/${envir}/g" ${projectname}.conf && \
+                              sed -i "s/ppgoname/${ppgoname}/g" Dockerfile && \
+							  sed -i "s/ppgoport/${ppgoport}/g" Dockerfile && \
+							  sed -i "s/env/${envir}/g" Dockerfile"""
+					 }
+			  }
+			  stage('打包镜像') {
+			         steps {
+	                  sh """docker build -t ip2.axhome.com.cn/anxin-project/${projectname}-${envir}:latest . && \
+					                              docker login -u operation -p Harbor12345 ip2.axhome.com.cn && \
+							                      docker push ip2.axhome.com.cn/anxin-project/${projectname}-${envir}:latest"""
+					 }
+			  }
+			  stage('创建新的deployment') {
+			         steps {
+					        sh """wget http://192.168.200.187:8090/${projectname}/deployment.yaml && \
+					           sed -i "s/namespace: namespace/namespace: ${namespace}/g" deployment.yaml && \
+							   sed -i "s/name: ${projectname}\$/name: ${projectname}-${BUILD_ID}/g" deployment.yaml && \
+							   sed -i "s/app: ${projectname}/app: ${projectname}-${BUILD_ID}/g" deployment.yaml && \
+							   sed -i "s/env:latest\$/${envir}:latest/g" deployment.yaml && \
+					           kubectl apply -f deployment.yaml"""
+					 }
+			  }
+			  stage('切换流量到新的版本') {
+			         steps{
+					 	   sh """kubectl patch -n $namespace service ${projectname}-svc -p '{"spec":{"selector":{"app":"'"${projectname}-${BUILD_ID}"'"}}}'"""
+					 }
+			  }
+			  stage('本次发版已成功') {
+			         steps{
+			               echo '本次发版已成功'
+                           sh """wget http://192.168.200.187:8090/check_cron.sh && \
+						             sed -i "s/namespace/${namespace}/g" check_cron.sh && \
+									 sed -i "s/projectname/${projectname}/g" check_cron.sh && \
+									 chmod +x check_cron.sh && \
+									 sh check_cron.sh >> check_cron.log &"""
+						   }
+			  }
+	 }
+}
