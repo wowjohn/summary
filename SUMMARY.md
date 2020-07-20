@@ -24,6 +24,7 @@
     * [代码混淆](php_encode/encode.md)
     * [ab压力测试](abtest/index.md)
     * [Symfony Security](php/security.md)
+    * [Sonarqube](sonar/index.md)
 * [定时任务](crontab/index.md)
     * [xxl-job](crontab/xxl-job.md)
     * [ppgo](crontab/ppgo.md)
