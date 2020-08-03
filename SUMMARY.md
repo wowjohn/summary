@@ -1,3 +1,5 @@
+> 个人总结项目，包括一些项目搭建部署备注
+
 * [Git](git/index.md)
     * [Git冲突解决](git/merge.md)
     * [项目commit校验](git/commit.md)
@@ -39,6 +41,8 @@
     * [mysql](mysql/README.md)
     * [cnpmjs私有库](cnpmjs/index.md)
     * [KubeSphere](KubeSphere/index.md)
+    * [Mycat中间件](https://github.com/wowjohn/mycat-project)
+    * [Kong Gateway](https://github.com/wowjohn/Kong-project)
 * [linux](linux/README.md)
     * [ubuntu发送邮件](linux/email.md)
     * [Jumpserver](jumpserver/README.md)
