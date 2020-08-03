@@ -2,9 +2,9 @@ pipeline{
        agent any
 
 	   environment{
-	          namespace='test-env'
-			  envir='test'
-			  ppgoport='31112'
+	          namespace='tesa-env'
+			  envir='tesa'
+			  ppgoport='12'
 			  ppgoname='test-os-api'
 			  projectname='os-api'
 	   }
@@ -26,7 +26,7 @@ pipeline{
 								   doGenerateSubmoduleConfigurations: false,
 								   extensions: [],
 								   submoduleCfg: [],
-								   userRemoteConfigs: [[credentialsId: 'gitlab-connection-account', url: 'https://gitlab.axhome.com.cn/common/object-storage-api.git']]
+								   userRemoteConfigs: [[credentialsId: 'gitlab-connection-account', url: 'https://xxxx.cn/common/object-storage-api.git']]
 								   ])
 							}
 							sh """rm .git -rf && \
@@ -39,25 +39,25 @@ pipeline{
 			  }
 			  stage('下载模板文件') {
 			         steps{
-					 sh """wget http://192.168.200.187:8090/${projectname}/${projectname}.conf && \
-					          wget http://192.168.200.187:8090/${projectname}/upload-php.ini && \
-					          wget http://192.168.200.187:8090/${projectname}/Dockerfile && \
+					 sh """wget http://xxx/${projectname}/${projectname}.conf && \
+					          wget http://xxx/${projectname}/upload-php.ini && \
+					          wget http://xxx/${projectname}/Dockerfile && \
 					          sed -i "s/env/${envir}/g" ${projectname}.conf && \
-                              sed -i "s/ppgoname/${ppgoname}/g" Dockerfile && \
-							  sed -i "s/ppgoport/${ppgoport}/g" Dockerfile && \
+                              sed -i "s/pp/${ppgoname}/g" Dockerfile && \
+							  sed -i "s/pp/${ppgoport}/g" Dockerfile && \
 							  sed -i "s/env/${envir}/g" Dockerfile"""
 					 }
 			  }
 			  stage('打包镜像') {
 			         steps {
-	                  sh """docker build -t ip2.axhome.com.cn/anxin-project/${projectname}-${envir}:latest . && \
-					                              docker login -u operation -p Harbor12345 ip2.axhome.com.cn && \
-							                      docker push ip2.axhome.com.cn/anxin-project/${projectname}-${envir}:latest"""
+	                  sh """docker build -t xxx.com.cn/project/${projectname}-${envir}:latest . && \
+					                              docker login -u operation -p pwd xxx.com && \
+							                      docker push xxx.com/project/${projectname}-${envir}:latest"""
 					 }
 			  }
 			  stage('创建新的deployment') {
 			         steps {
-					        sh """wget http://192.168.200.187:8090/${projectname}/deployment.yaml && \
+					        sh """wget http://xxx/${projectname}/deployment.yaml && \
 					           sed -i "s/namespace: namespace/namespace: ${namespace}/g" deployment.yaml && \
 							   sed -i "s/name: ${projectname}\$/name: ${projectname}-${BUILD_ID}/g" deployment.yaml && \
 							   sed -i "s/app: ${projectname}/app: ${projectname}-${BUILD_ID}/g" deployment.yaml && \
@@ -73,7 +73,7 @@ pipeline{
 			  stage('本次发版已成功') {
 			         steps{
 			               echo '本次发版已成功'
-                           sh """wget http://192.168.200.187:8090/check_cron.sh && \
+                           sh """wget http://xxx/check_cron.sh && \
 						             sed -i "s/namespace/${namespace}/g" check_cron.sh && \
 									 sed -i "s/projectname/${projectname}/g" check_cron.sh && \
 									 chmod +x check_cron.sh && \
