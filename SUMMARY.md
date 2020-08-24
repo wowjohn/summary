@@ -20,7 +20,7 @@
     * [symfony](php/symfony.md)
     * [hyperf](php/hyperf.md)
     * [单元测试](phpunit/index.md)
-    * [composer拉取超时](composer/index.md)
+    * [composer](composer/index.md)
         * [laravel-china](composer/laravel.md)
         * [aliyun](composer/aliyun.md)
     * [代码混淆](php_encode/encode.md)
