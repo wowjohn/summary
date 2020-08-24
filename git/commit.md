@@ -18,6 +18,10 @@ npm install --save-dev husky
   }
 }
 ```
+[参考文件](reference)
+
+> 注意 package.json 中的 "main": "commitlint.config.js"
+
 
 git commit -m "feat: 新增XXX需求"
 
